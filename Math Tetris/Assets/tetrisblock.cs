@@ -8,21 +8,26 @@ public class tetrisblock : MonoBehaviour
     public float fallspeed = 2.0f;
     private float falltimer;
     private float currentfallspeed;
+    public Vector3 Origin;
 
     // Update is called once per frame
     void Update()
     {
-       
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && Left_Edge._instance.touching_edge == false) //GetKeyDown é toda vez que for precionado, se segurar não faz nada
+        RaycastHit2D down_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 1f);
+        RaycastHit2D right_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.right), 1f);
+        RaycastHit2D left_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), 1f);
+
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && !left_hit)
         {
             transform.position += new Vector3(-1, 0, 0);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && Right_Edge._instance.touching_edge == false)
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && !right_hit)
         {
             transform.position += new Vector3(1, 0, 0);
         }
 
-        if (Input.GetKey(KeyCode.DownArrow)) //GetKey é enquanto estiver precionado, pode segurar
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             currentfallspeed = fallspeed / 10;
         }
@@ -31,18 +36,18 @@ public class tetrisblock : MonoBehaviour
             currentfallspeed = fallspeed;
         }
 
-        if (Bottom_Edge._instance.touching_edge == false)
+        if (!down_hit)
         {
             if ((Time.time - falltimer) > currentfallspeed)
             {
                 transform.position += new Vector3(0, -1, 0);
                 falltimer = Time.time;
             }
-        }
+        }       
 
-        if (Input.GetKeyDown(KeyCode.E) || transform.position.y < 0) //eu coloquei a camera pra acabar em 0, então toda vez que sai da camera volta pra origem. só por enquanto
+        if (Input.GetKeyDown(KeyCode.E) || transform.position.y < 0)
         {
-            transform.position = new Vector3(0, 19.5f, 0);
+            transform.position = Origin;
         }
         
     }
