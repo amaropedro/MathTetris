@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,6 +11,13 @@ public class tetrisblock : MonoBehaviour
     private float falltimer;
     private float currentfallspeed;
     private bool enable = true;
+    public TextMeshProUGUI text;
+
+    private void Start()
+    {
+        text.text = UnityEngine.Random.Range(0, 9).ToString();
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -38,19 +46,29 @@ public class tetrisblock : MonoBehaviour
                 currentfallspeed = fallspeed;
             }
 
-            if (!down_hit)
+
+            if ((Time.time - falltimer) > currentfallspeed)
             {
-                if ((Time.time - falltimer) > currentfallspeed)
+                if (!down_hit)
                 {
                     transform.position += new Vector3(0, -1, 0);
                     falltimer = Time.time;
                 }
+                else
+                {
+                    enable = false;
+                    if (transform.position.y >= 18.5f)
+                    {
+                        //game over
+                        print("game over");
+                    }
+                    else
+                    {
+                        StartCoroutine(SpawnerCoroutine());
+                    }
+                }
             }
-            else //seria bom adicionar uma tolerancia para que se possa mover o bloco por um tempo depois de encostar no chão?
-            {
-                enable = false;
-                StartCoroutine(SpawnerCoroutine());
-            }
+
         }
     }
     IEnumerator SpawnerCoroutine()
