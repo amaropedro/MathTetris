@@ -23,11 +23,11 @@ public class tetrisblock : MonoBehaviour
 
         if (aux == 1) { operacao = '+'; operando1 = UnityEngine.Random.Range(0, 100); operando2 = UnityEngine.Random.Range(0, 100); }
         else if (aux == 2) { operacao = '-'; operando1 = UnityEngine.Random.Range(0, 100); operando2 = UnityEngine.Random.Range(0, 100);  }
-        else if (aux == 3) { operacao = 'X'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(0+ operacao, 30); }
+        else if (aux == 3) { operacao = 'x'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(0, 30); }
         else if (aux == 4) { operacao = '/'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(1, 30); }
 
 
-        text.text = operando1.ToString() + operacao + operando2.ToString() ;
+        text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
 
 
