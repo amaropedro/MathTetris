@@ -7,6 +7,10 @@ using UnityEngine.UIElements;
 
 public class tetrisblock : MonoBehaviour
 {
+    int operando1;
+    int operando2;
+    char operacao;
+    int aux;
     public float fallspeed = 2.0f;
     private float falltimer;
     private float currentfallspeed;
@@ -15,7 +19,15 @@ public class tetrisblock : MonoBehaviour
 
     private void Start()
     {
-        text.text = UnityEngine.Random.Range(0, 9).ToString();
+        int aux = UnityEngine.Random.Range(1, 4);
+
+        if (aux == 1) { operacao = '+'; operando1 = UnityEngine.Random.Range(0, 100); operando2 = UnityEngine.Random.Range(0, 100); }
+        else if (aux == 2) { operacao = '-'; operando1 = UnityEngine.Random.Range(0, 100); operando2 = UnityEngine.Random.Range(0, 100);  }
+        else if (aux == 3) { operacao = 'x'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(0, 30); }
+        else if (aux == 4) { operacao = '/'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(1, 30); }
+
+
+        text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
 
 
