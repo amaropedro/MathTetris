@@ -1,24 +1,41 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class Spawner : MonoBehaviour
 {
     public GameObject Piece;
     public GameObject SmallPiece;
-    private float[] x_pos = {-4.5f, -3.5f, -2.5f, -1.5f, -0.5f, 0.5f, 1.5f, 2.5f, 3.5f, 4.5f, 5.5f};
+
+    public static Spawner _instance;
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(SpawnCoroutine(50));
+    }
+
+    private IEnumerator SpawnCoroutine(int chance)
+    {
+        SpawnSmallPieces(chance);
+        yield return new WaitForSeconds(2.5f);
         SpawnPiece();
-        
-        //quero melhorar isso pra pegar posi��es aleatorias dentre as possiveis
-        for (int i = 0; i < 5; i++)
-        {
-            SpawnSamllPiece(new Vector3(x_pos[i], 3.5f, 0));
-        }
     }
 
    public void SpawnPiece()
@@ -26,8 +43,27 @@ public class Spawner : MonoBehaviour
         Instantiate(Piece);
    }
 
-   public void SpawnSamllPiece(Vector3 position)
+   public void SpawnSmallPieces(int chance)
    {
-        Instantiate(SmallPiece, position, new Quaternion());
-   }
+        bool hasAtLeatOneSpawned = false;
+        float[] x_pos = { -4.5f, -3.5f, -2.5f, -1.5f, -0.5f, 0.5f, 1.5f, 2.5f, 3.5f, 4.5f, 5.5f };
+        List<Smalltetrisblock> allSmallPieces = new List<Smalltetrisblock>();
+
+
+        foreach (float i in x_pos)
+        {
+            if (UnityEngine.Random.Range(0, 100) <= chance)
+            {
+                hasAtLeatOneSpawned = true;
+                //criar uma lista allsmallpieces e colocar cada instancia na lista
+                //a intenção é no futuro verificar se as peças atingiram o chão
+                allSmallPieces.Add(Instantiate(SmallPiece, new Vector3(i, 23.5f, 0), new Quaternion()).GetComponent<Smalltetrisblock>());
+            }
+
+        }
+        if (!hasAtLeatOneSpawned)
+        {
+            allSmallPieces.Add(Instantiate(SmallPiece, new Vector3(0.5f, 23.5f, 0), new Quaternion()).GetComponent<Smalltetrisblock>());
+        }
+    }
 }

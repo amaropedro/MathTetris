@@ -76,8 +76,8 @@ public class tetrisblock : MonoBehaviour
                     else
                     {
                         //checar se for a peça correta, se não for
-                        FindObjectOfType<Spawner>().SpawnSamllPiece(new Vector3(transform.position.x, transform.position.y+3, 0));
-                        FindObjectOfType<Spawner>().SpawnPiece();
+                        StartCoroutine(SpawnCoroutine(20));
+                        Spawner._instance.SpawnPiece();
                         Destroy(gameObject);
                     }
                 }
@@ -85,5 +85,13 @@ public class tetrisblock : MonoBehaviour
 
         }
     }
-  
+
+    IEnumerator SpawnCoroutine(int chance)
+    {
+        Spawner._instance.SpawnSmallPieces(chance);
+        //esse wait não está funcionando
+        yield return new WaitForSeconds(2.5f);
+        print("hello");
+    }
+
 }

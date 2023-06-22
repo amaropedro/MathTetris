@@ -6,7 +6,7 @@ using UnityEngine;
 public class Smalltetrisblock : MonoBehaviour
 {
     public TextMeshProUGUI text;
-    private bool canSpawn = true;
+    public bool hasFallen = false;
     public float fallspeed = 2.0f;
     private float falltimer;
 
@@ -25,6 +25,10 @@ public class Smalltetrisblock : MonoBehaviour
         {
             transform.position += new Vector3(0, -1, 0);
             falltimer = Time.time;
+        }
+        if (down_hit)
+        {
+            hasFallen = true;
         }
     }
 
