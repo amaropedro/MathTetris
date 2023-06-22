@@ -6,6 +6,9 @@ using UnityEngine;
 public class Smalltetrisblock : MonoBehaviour
 {
     public TextMeshProUGUI text;
+    private bool canSpawn = true;
+    public float fallspeed = 2.0f;
+    private float falltimer;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +19,14 @@ public class Smalltetrisblock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        RaycastHit2D down_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 1f);
+
+        if ((Time.time - falltimer) > fallspeed && !down_hit)
+        {
+            transform.position += new Vector3(0, -1, 0);
+            falltimer = Time.time;
+        }
     }
+
+ 
 }

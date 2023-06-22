@@ -58,7 +58,6 @@ public class tetrisblock : MonoBehaviour
                 currentfallspeed = fallspeed;
             }
 
-
             if ((Time.time - falltimer) > currentfallspeed)
             {
                 if (!down_hit)
@@ -76,16 +75,15 @@ public class tetrisblock : MonoBehaviour
                     }
                     else
                     {
-                        StartCoroutine(SpawnerCoroutine());
+                        //checar se for a peça correta, se não for
+                        FindObjectOfType<Spawner>().SpawnSamllPiece(new Vector3(transform.position.x, transform.position.y+3, 0));
+                        FindObjectOfType<Spawner>().SpawnPiece();
+                        Destroy(gameObject);
                     }
                 }
             }
 
         }
     }
-    IEnumerator SpawnerCoroutine()
-    {
-        yield return new WaitForSeconds(0.5f);
-        FindObjectOfType<Spawner>().SpawnPiece();
-    }
+  
 }
