@@ -26,7 +26,10 @@ public class tetrisblock : MonoBehaviour
         operador = UnityEngine.Random.Range(1, 4);
         resultado = ExpressionControler._instance.chooseRandomResult();
 
+
+        //Debug.Log("Remove atual para proxima nn ser chamada com o mesmo valor: " + resultado);
         ExpressionControler._instance.removeFromList(resultado);
+        
 
         switch (operador)
         {
@@ -124,14 +127,24 @@ public class tetrisblock : MonoBehaviour
                     }
                     else
                     {
-                        if(resultado == down_hit.collider.gameObject.GetComponent<Smalltetrisblock>().result)
+                        //if (up_hit.collider.CompareTag("SmallBlock"))
+                        GameObject obj = down_hit.collider.gameObject;
+                        if (obj.CompareTag("SmallBlock"))
                         {
-                            Destroy(down_hit.collider.gameObject);
+                            //Debug.Log("AQUIIII");
+                            if (resultado == obj.GetComponent<Smalltetrisblock>().result)
+                            {
+                                Destroy(obj);
+                            }
+                            
                         }
                         else
                         {
                             StartCoroutine(SpawnCoroutine(20));
+
+                            //Debug.Log("Errou, adiciona novamente o resultado para as possibilidades: " + resultado);
                             ExpressionControler._instance.addToList(resultado);
+                            
                         }
                         Spawner._instance.SpawnPiece();
                         Destroy(gameObject);

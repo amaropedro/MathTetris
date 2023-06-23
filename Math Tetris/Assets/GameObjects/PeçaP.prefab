@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1957397590640154410}
   m_Layer: 0
   m_Name: "Pe\xE7aP"
-  m_TagString: Untagged
+  m_TagString: SmallBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +53,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 5769905134267163442}
+  hasFallen: 0
   fallspeed: 0.1
+  result: 0
 --- !u!61 &1957397590640154410
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -328,7 +330,7 @@ GameObject:
   - component: {fileID: 5964776689008824772}
   m_Layer: 0
   m_Name: pecaP
-  m_TagString: Untagged
+  m_TagString: SmallBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Smalltetrisblock : MonoBehaviour
@@ -43,13 +44,21 @@ public class Smalltetrisblock : MonoBehaviour
             {
                 if (res_already_added)
                 {
-                    ExpressionControler._instance.removeFromList(result);
-                    res_already_added = false;
+                    
+                    if (up_hit.collider.CompareTag("SmallBlock"))
+                    {
+                        //Debug.Log("Remove possibilidade se tem algo em cima: " + result);
+                        ExpressionControler._instance.removeFromList(result);
+                        res_already_added = false;
+                    }
+
                 }
             }
             else if (!res_already_added)
             {
+                //Debug.Log("Adiciona possibilidade ACHO QUE SE O BLOCO DE CIMA SUMIU: " + result);
                 ExpressionControler._instance.addToList(result);
+                
                 res_already_added = true;
             }
         }
