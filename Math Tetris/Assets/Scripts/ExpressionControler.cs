@@ -29,4 +29,11 @@ public class ExpressionControler : MonoBehaviour
     {
         results.Remove(value);
     }
+
+    public int chooseRandomResult()
+    {
+        int choice;
+        choice = UnityEngine.Random.Range(0, results.Count);
+        return results[choice];
+    }
 }

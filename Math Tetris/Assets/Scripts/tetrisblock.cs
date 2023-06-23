@@ -7,10 +7,14 @@ using UnityEngine.UIElements;
 
 public class tetrisblock : MonoBehaviour
 {
-    int operando1;
-    int operando2;
-    char operacao;
-    int aux;
+    private int operando1;
+    private int operando2;
+    private char operacao;
+    private int operador;
+    private int resultado;
+
+    private int choice;
+
     public float fallspeed = 2.0f;
     private float falltimer;
     private float currentfallspeed;
@@ -19,25 +23,13 @@ public class tetrisblock : MonoBehaviour
 
     private void Start()
     {
-        int aux = UnityEngine.Random.Range(1, 4);
-        //int aux = 3;
-        /*int[] resultados = new int[200];
-        int resultado = UnityEngine.Random.Range(0, 200);
+        operador = UnityEngine.Random.Range(1, 4);
+        resultado = ExpressionControler._instance.chooseRandomResult();
 
-        for (int i = 0; i < resultados.Length; i++)
-        {
-            resultados[i] = i + 1;
-        }*/
-        int resultado;
-
-
-        switch (aux)
+        switch (operador)
         {
             case 1:
                 operacao = '+';
-
-                resultado = UnityEngine.Random.Range(0, 100);
-                Debug.Log(resultado);
 
                 operando1 = UnityEngine.Random.Range(0, resultado); 
                 operando2 = resultado-operando1;
@@ -45,22 +37,15 @@ public class tetrisblock : MonoBehaviour
             case 2:
                 operacao = '-';
 
-                resultado = UnityEngine.Random.Range(0, 100);
-                Debug.Log(resultado);
-
                 operando1 = UnityEngine.Random.Range(resultado, 100); 
                 operando2 = operando1-resultado;
                 break;
             case 3:
                 operacao = 'x';
 
-                int choice;
-                resultado = UnityEngine.Random.Range(0, 100);
-                Debug.Log(resultado);
-
                 List<(int,int)> values = new List<(int,int)> ();
 
-                for(int i = 0; ++i <= resultado;)//coloquei <= diferente de amaro
+                for(int i = 0; ++i <= resultado;)
                 {
                     if (resultado % i == 0)
                     {
@@ -74,14 +59,12 @@ public class tetrisblock : MonoBehaviour
                     values.Add((0, 0));
                 }
                 choice = UnityEngine.Random.Range(0, values.Count);
+
                 operando1 = values[choice].Item1; 
                 operando2 = values[choice].Item2;
                 break;
             case 4:
                 operacao = '/';
-
-                resultado = UnityEngine.Random.Range(0, 100);
-                Debug.Log(resultado);
 
                 operando2 = UnityEngine.Random.Range(1, 30);
                 operando1 = resultado * operando2;
@@ -89,7 +72,7 @@ public class tetrisblock : MonoBehaviour
             default:
                 break;
         }
-
+        Debug.Log(resultado);
 
         text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
