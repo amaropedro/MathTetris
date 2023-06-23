@@ -16,6 +16,11 @@ public class tetrisblock : MonoBehaviour
     private float currentfallspeed;
     private bool enable = true;
     public TextMeshProUGUI text;
+    Expression_Control expression_Control;
+
+
+
+    
 
     private void Start()
     {
@@ -25,7 +30,7 @@ public class tetrisblock : MonoBehaviour
         else if (aux == 2) { operacao = '-'; operando1 = UnityEngine.Random.Range(0, 100); operando2 = UnityEngine.Random.Range(0, 100);  }
         else if (aux == 3) { operacao = 'x'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(0, 30); }
         else if (aux == 4) { operacao = '/'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(1, 30); }
-
+        
 
         text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
@@ -83,7 +88,7 @@ public class tetrisblock : MonoBehaviour
                 }
             }
 
-        }
+        } 
     }
 
     IEnumerator SpawnCoroutine(int chance)

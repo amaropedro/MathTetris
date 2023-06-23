@@ -5,7 +5,7 @@ using UnityEngine;
 public class Expression_Control : MonoBehaviour
 {
     public static Expression_Control _instance;
-    List<int> _Results = new List<int>();    
+    public List<int> _Results = new List<int>();    
 
     private void Awake()
     {
