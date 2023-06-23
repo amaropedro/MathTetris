@@ -10,7 +10,7 @@ public class Smalltetrisblock : MonoBehaviour
     public bool hasFallen = false;
     public float fallspeed = 2.0f;
     private float falltimer;
-    private int result;
+    public int result;
     private bool res_already_added = true;
 
     void Start()

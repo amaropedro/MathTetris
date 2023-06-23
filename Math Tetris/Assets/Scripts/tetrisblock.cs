@@ -26,6 +26,8 @@ public class tetrisblock : MonoBehaviour
         operador = UnityEngine.Random.Range(1, 4);
         resultado = ExpressionControler._instance.chooseRandomResult();
 
+        ExpressionControler._instance.removeFromList(resultado);
+
         switch (operador)
         {
             case 1:
@@ -72,7 +74,7 @@ public class tetrisblock : MonoBehaviour
             default:
                 break;
         }
-        Debug.Log(resultado);
+        //Debug.Log(resultado);
 
         text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
@@ -82,6 +84,7 @@ public class tetrisblock : MonoBehaviour
         if (enable)
         {
             RaycastHit2D down_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 1f);
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.down), Color.blue, 1f);
             RaycastHit2D right_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.right), 1f);
             RaycastHit2D left_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), 1f);
 
@@ -121,8 +124,15 @@ public class tetrisblock : MonoBehaviour
                     }
                     else
                     {
-                        //checar se for a pe�a correta, se n�o for
-                        StartCoroutine(SpawnCoroutine(20));
+                        if(resultado == down_hit.collider.gameObject.GetComponent<Smalltetrisblock>().result)
+                        {
+                            Destroy(down_hit.collider.gameObject);
+                        }
+                        else
+                        {
+                            StartCoroutine(SpawnCoroutine(20));
+                            ExpressionControler._instance.addToList(resultado);
+                        }
                         Spawner._instance.SpawnPiece();
                         Destroy(gameObject);
                     }

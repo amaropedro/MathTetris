@@ -23,11 +23,13 @@ public class ExpressionControler : MonoBehaviour
     public void addToList(int value)
     {
         results.Add(value);
+        printAllCurrentOptions();
     }
 
     public void removeFromList(int value) 
     {
         results.Remove(value);
+        printAllCurrentOptions();
     }
 
     public int chooseRandomResult()
@@ -35,5 +37,15 @@ public class ExpressionControler : MonoBehaviour
         int choice;
         choice = UnityEngine.Random.Range(0, results.Count);
         return results[choice];
+    }
+
+    //debug function
+    public void printAllCurrentOptions()
+    {
+        foreach (int value in results)
+        {
+            Debug.Log(value);
+        }
+        Debug.Log("----");
     }
 }
