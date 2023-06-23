@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Expression_Control : MonoBehaviour
+public class ExpressionControler : MonoBehaviour
 {
-    public static Expression_Control _instance;
-    public List<int> _Results = new List<int>();    
+    public List<int> results = new List<int>();
+
+    public static ExpressionControler _instance;
 
     private void Awake()
     {
@@ -18,16 +19,14 @@ public class Expression_Control : MonoBehaviour
             _instance = this;
         }
     }
-    
-    // Start is called before the first frame update
-    void Start()
+
+    public void addToList(int value)
     {
-        
+        results.Add(value);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void removeFromList(int value) 
     {
-        
+        results.Remove(value);
     }
 }

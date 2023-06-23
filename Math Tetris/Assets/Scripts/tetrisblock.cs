@@ -16,7 +16,6 @@ public class tetrisblock : MonoBehaviour
     private float currentfallspeed;
     private bool enable = true;
     public TextMeshProUGUI text;
-    Expression_Control expression_Control;
 
     private void Start()
     {
@@ -95,8 +94,6 @@ public class tetrisblock : MonoBehaviour
         text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         if (enable)
