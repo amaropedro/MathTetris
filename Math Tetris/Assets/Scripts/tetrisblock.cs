@@ -18,19 +18,79 @@ public class tetrisblock : MonoBehaviour
     public TextMeshProUGUI text;
     Expression_Control expression_Control;
 
-
-
-    
-
     private void Start()
     {
         int aux = UnityEngine.Random.Range(1, 4);
+        //int aux = 3;
+        /*int[] resultados = new int[200];
+        int resultado = UnityEngine.Random.Range(0, 200);
 
-        if (aux == 1) { operacao = '+'; operando1 = UnityEngine.Random.Range(0, 100); operando2 = UnityEngine.Random.Range(0, 100); }
-        else if (aux == 2) { operacao = '-'; operando1 = UnityEngine.Random.Range(0, 100); operando2 = UnityEngine.Random.Range(0, 100);  }
-        else if (aux == 3) { operacao = 'x'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(0, 30); }
-        else if (aux == 4) { operacao = '/'; operando1 = UnityEngine.Random.Range(0, 30); operando2 = UnityEngine.Random.Range(1, 30); }
-        
+        for (int i = 0; i < resultados.Length; i++)
+        {
+            resultados[i] = i + 1;
+        }*/
+        int resultado;
+
+
+        switch (aux)
+        {
+            case 1:
+                operacao = '+';
+
+                resultado = UnityEngine.Random.Range(0, 100);
+                Debug.Log(resultado);
+
+                operando1 = UnityEngine.Random.Range(0, resultado); 
+                operando2 = resultado-operando1;
+                break;
+            case 2:
+                operacao = '-';
+
+                resultado = UnityEngine.Random.Range(0, 100);
+                Debug.Log(resultado);
+
+                operando1 = UnityEngine.Random.Range(resultado, 100); 
+                operando2 = operando1-resultado;
+                break;
+            case 3:
+                operacao = 'x';
+
+                int choice;
+                resultado = UnityEngine.Random.Range(0, 100);
+                Debug.Log(resultado);
+
+                List<(int,int)> values = new List<(int,int)> ();
+
+                for(int i = 0; ++i <= resultado;)//coloquei <= diferente de amaro
+                {
+                    if (resultado % i == 0)
+                    {
+                        operando1 = i;
+                        operando2 = resultado / i;
+                        values.Add((operando1, operando2));
+                    }
+                }
+                if (resultado == 0)
+                {
+                    values.Add((0, 0));
+                }
+                choice = UnityEngine.Random.Range(0, values.Count);
+                operando1 = values[choice].Item1; 
+                operando2 = values[choice].Item2;
+                break;
+            case 4:
+                operacao = '/';
+
+                resultado = UnityEngine.Random.Range(0, 100);
+                Debug.Log(resultado);
+
+                operando2 = UnityEngine.Random.Range(1, 30);
+                operando1 = resultado * operando2;
+                break;
+            default:
+                break;
+        }
+
 
         text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
@@ -63,6 +123,7 @@ public class tetrisblock : MonoBehaviour
                 currentfallspeed = fallspeed;
             }
 
+
             if ((Time.time - falltimer) > currentfallspeed)
             {
                 if (!down_hit)
@@ -80,7 +141,7 @@ public class tetrisblock : MonoBehaviour
                     }
                     else
                     {
-                        //checar se for a peça correta, se não for
+                        //checar se for a peï¿½a correta, se nï¿½o for
                         StartCoroutine(SpawnCoroutine(20));
                         Spawner._instance.SpawnPiece();
                         Destroy(gameObject);
@@ -88,13 +149,13 @@ public class tetrisblock : MonoBehaviour
                 }
             }
 
-        } 
+        }
     }
 
     IEnumerator SpawnCoroutine(int chance)
     {
         Spawner._instance.SpawnSmallPieces(chance);
-        //esse wait não está funcionando
+        //esse wait nï¿½o estï¿½ funcionando
         yield return new WaitForSeconds(2.5f);
         print("hello");
     }
