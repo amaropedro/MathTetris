@@ -23,15 +23,15 @@ public class ExpressionControler : MonoBehaviour
     public void addToList(int value)
     {
         results.Add(value);
-        /*Debug.Log("Add:");
-        printAllCurrentOptions();*/
+        //Debug.Log("Add:");
+        //printAllCurrentOptions();
     }
 
     public void removeFromList(int value) 
     {
         results.Remove(value);
-        /*Debug.Log("Remove:");
-        printAllCurrentOptions();*/
+        Debug.Log("Remove:");
+        printAllCurrentOptions();
     }
 
     public int chooseRandomResult()

@@ -23,14 +23,14 @@ public class tetrisblock : MonoBehaviour
 
     private void Start()
     {
-        operador = UnityEngine.Random.Range(1, 4);
+        operador = UnityEngine.Random.Range(1, 5);
         resultado = ExpressionControler._instance.chooseRandomResult();
 
 
         //Debug.Log("Remove atual para proxima nn ser chamada com o mesmo valor: " + resultado);
         ExpressionControler._instance.removeFromList(resultado);
         
-
+        //escolher se vai incluir as operações com 0 ou não
         switch (operador)
         {
             case 1:
@@ -127,7 +127,6 @@ public class tetrisblock : MonoBehaviour
                     }
                     else
                     {
-                        //if (up_hit.collider.CompareTag("SmallBlock"))
                         GameObject obj = down_hit.collider.gameObject;
                         if (obj.CompareTag("SmallBlock"))
                         {
@@ -147,6 +146,8 @@ public class tetrisblock : MonoBehaviour
                             
                         }
                         Spawner._instance.SpawnPiece();
+                        //Debug.Log("ADD");
+                        //ExpressionControler._instance.printAllCurrentOptions();
                         Destroy(gameObject);
                     }
                 }

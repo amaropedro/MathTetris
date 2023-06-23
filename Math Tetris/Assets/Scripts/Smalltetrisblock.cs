@@ -16,7 +16,8 @@ public class Smalltetrisblock : MonoBehaviour
 
     void Start()
     {
-        result = UnityEngine.Random.Range(0, 9);
+        //Mudar esse range
+        result = UnityEngine.Random.Range(0, 100);
         ExpressionControler._instance.addToList(result);
         text.text = result.ToString();
     }
