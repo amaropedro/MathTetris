@@ -108,7 +108,6 @@ public class tetrisblock : MonoBehaviour
                 currentfallspeed = fallspeed;
             }
 
-
             if ((Time.time - falltimer) > currentfallspeed)
             {
                 if (!down_hit)
@@ -130,8 +129,15 @@ public class tetrisblock : MonoBehaviour
                         if (obj.CompareTag("SmallBlock") && (resultado == obj.GetComponent<Smalltetrisblock>().result))
                         {
                             Destroy(obj);
-                            Spawner._instance.SpawnPiece();
-                            Destroy(gameObject);
+                            if (ExpressionControler._instance.results.Count == 0)
+                            {
+                                StartCoroutine(SpawnAndDestroyCoroutine(50));
+                            }
+                            else
+                            {
+                                Spawner._instance.SpawnPiece();
+                                Destroy(gameObject);
+                            }
                         }
                         else
                         {
@@ -141,7 +147,6 @@ public class tetrisblock : MonoBehaviour
                     }
                 }
             }
-
         }
         else
         {
