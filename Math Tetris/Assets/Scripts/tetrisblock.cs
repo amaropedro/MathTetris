@@ -26,7 +26,6 @@ public class tetrisblock : MonoBehaviour
         operador = UnityEngine.Random.Range(1, 5);
         resultado = ExpressionControler._instance.chooseRandomResult();
 
-
         //Debug.Log("Remove atual para proxima nn ser chamada com o mesmo valor: " + resultado);
         ExpressionControler._instance.removeFromList(resultado);
         
@@ -87,7 +86,7 @@ public class tetrisblock : MonoBehaviour
         if (enable)
         {
             RaycastHit2D down_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 1f);
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.down), Color.blue, 1f);
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.down), Color.blue, 1f);
             RaycastHit2D right_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.right), 1f);
             RaycastHit2D left_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), 1f);
 
@@ -135,16 +134,18 @@ public class tetrisblock : MonoBehaviour
                             {
                                 Destroy(obj);
                             }
-                            
+                            else
+                            {
+                                StartCoroutine(SpawnCoroutine(20));
+                                ExpressionControler._instance.addToList(resultado);
+                            }
                         }
                         else
                         {
                             StartCoroutine(SpawnCoroutine(20));
-
-                            //Debug.Log("Errou, adiciona novamente o resultado para as possibilidades: " + resultado);
                             ExpressionControler._instance.addToList(resultado);
-                            
                         }
+                        
                         Spawner._instance.SpawnPiece();
                         //Debug.Log("ADD");
                         //ExpressionControler._instance.printAllCurrentOptions();

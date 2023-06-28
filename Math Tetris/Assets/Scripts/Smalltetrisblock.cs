@@ -39,20 +39,18 @@ public class Smalltetrisblock : MonoBehaviour
 
         if (hasFallen)
         {
-            RaycastHit2D up_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.up), 1f);
+            RaycastHit2D up_hit = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.TransformDirection(Vector2.up), 0.3f);
 
             if (up_hit)
             {
                 if (res_already_added)
-                {
-                    
+                {         
                     if (up_hit.collider.CompareTag("SmallBlock"))
                     {
                         //Debug.Log("Remove possibilidade se tem algo em cima: " + result);
                         ExpressionControler._instance.removeFromList(result);
                         res_already_added = false;
                     }
-
                 }
             }
             else if (!res_already_added)

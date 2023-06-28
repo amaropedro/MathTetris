@@ -30,8 +30,8 @@ public class ExpressionControler : MonoBehaviour
     public void removeFromList(int value) 
     {
         results.Remove(value);
-        Debug.Log("Remove:");
-        printAllCurrentOptions();
+        Debug.Log("Remove call recebida:");
+        //printAllCurrentOptions();
     }
 
     public int chooseRandomResult()
