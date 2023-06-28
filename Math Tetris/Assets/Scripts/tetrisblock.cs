@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,7 +19,7 @@ public class tetrisblock : MonoBehaviour
     public float fallspeed = 2.0f;
     private float falltimer;
     private float currentfallspeed;
-    private bool enable = true;
+    private bool isEnabled = true;
     public TextMeshProUGUI text;
 
     private void Start()
@@ -83,10 +84,9 @@ public class tetrisblock : MonoBehaviour
 
     void Update()
     {
-        if (enable)
+        if (isEnabled)
         {
             RaycastHit2D down_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 1f);
-            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.down), Color.blue, 1f);
             RaycastHit2D right_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.right), 1f);
             RaycastHit2D left_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), 1f);
 
@@ -118,7 +118,7 @@ public class tetrisblock : MonoBehaviour
                 }
                 else
                 {
-                    enable = false;
+                    isEnabled = false;
                     if (transform.position.y >= 18.5f)
                     {
                         //game over
@@ -127,42 +127,35 @@ public class tetrisblock : MonoBehaviour
                     else
                     {
                         GameObject obj = down_hit.collider.gameObject;
-                        if (obj.CompareTag("SmallBlock"))
+                        if (obj.CompareTag("SmallBlock") && (resultado == obj.GetComponent<Smalltetrisblock>().result))
                         {
-                            //Debug.Log("AQUIIII");
-                            if (resultado == obj.GetComponent<Smalltetrisblock>().result)
-                            {
-                                Destroy(obj);
-                            }
-                            else
-                            {
-                                StartCoroutine(SpawnCoroutine(20));
-                                ExpressionControler._instance.addToList(resultado);
-                            }
+                            Destroy(obj);
+                            Spawner._instance.SpawnPiece();
+                            Destroy(gameObject);
                         }
                         else
                         {
-                            StartCoroutine(SpawnCoroutine(20));
                             ExpressionControler._instance.addToList(resultado);
+                            StartCoroutine(SpawnAndDestroyCoroutine(20));                          
                         }
-                        
-                        Spawner._instance.SpawnPiece();
-                        //Debug.Log("ADD");
-                        //ExpressionControler._instance.printAllCurrentOptions();
-                        Destroy(gameObject);
                     }
                 }
             }
 
         }
+        else
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+            GetComponentInChildren<Canvas>().enabled = false;
+        }
     }
 
-    IEnumerator SpawnCoroutine(int chance)
+    IEnumerator SpawnAndDestroyCoroutine(int chance)
     {
         Spawner._instance.SpawnSmallPieces(chance);
-        //esse wait n�o est� funcionando
         yield return new WaitForSeconds(2.5f);
-        print("hello");
+        Spawner._instance.SpawnPiece();
+        Destroy(gameObject);
     }
-
 }
