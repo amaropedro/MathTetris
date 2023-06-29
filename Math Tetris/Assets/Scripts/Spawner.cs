@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
     public GameObject SmallPiece;
 
     public static Spawner _instance;
+   
 
     private void Awake()
     {

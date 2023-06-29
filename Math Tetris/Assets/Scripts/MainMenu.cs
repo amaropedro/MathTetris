@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     
 	public void play_game(){
 	
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
+		SceneManager.LoadScene("TelaDoJogo"); 
 
         }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class tetrisblock : MonoBehaviour
@@ -122,6 +123,8 @@ public class tetrisblock : MonoBehaviour
                     {
                         //game over
                         print("game over");
+                        SceneManager.LoadScene("GameOverScreen");
+
                     }
                     else
                     {
