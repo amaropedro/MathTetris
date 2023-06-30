@@ -131,6 +131,15 @@ public class tetrisblock : MonoBehaviour
                         GameObject obj = down_hit.collider.gameObject;
                         if (obj.CompareTag("SmallBlock") && (resultado == obj.GetComponent<Smalltetrisblock>().result))
                         {
+                            
+                            if(operador == 1 || operador == 2)
+                            {
+                                Score._instance.ScoreValue += 70;
+                            }
+                            else
+                            {
+                                Score._instance.ScoreValue += 100;
+                            }
                             Destroy(obj);
                             if (ExpressionControler._instance.results.Count == 0)
                             {
@@ -144,6 +153,22 @@ public class tetrisblock : MonoBehaviour
                         }
                         else
                         {
+                            if (operador == 1 || operador == 2)
+                            {
+                                Score._instance.ScoreValue -= 35;
+                                if (Score._instance.ScoreValue < 0)
+                                {
+                                    Score._instance.ScoreValue = 0;
+                                }
+                            }
+                            else
+                            {
+                                Score._instance.ScoreValue -= 50;
+                                if(Score._instance.ScoreValue < 0)
+                                {
+                                    Score._instance.ScoreValue = 0;
+                                }
+                            }
                             ExpressionControler._instance.addToList(resultado);
                             StartCoroutine(SpawnAndDestroyCoroutine(20));                          
                         }

@@ -9,7 +9,8 @@ using TMPro;
 public class Game_Over_Screen : MonoBehaviour
 
 {
-    public TMP_Text score_value;
+    //public TMP_Text score_value;
+    public TMP_Text ScoreText;
     public void QuitToMenu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -23,7 +24,15 @@ public class Game_Over_Screen : MonoBehaviour
     private void Start()
     {
 
-        score_value.text = UnityEngine.Random.Range(100, 200).ToString() + UnityEngine.Random.Range(100, 200).ToString();
+        //score_value.text = UnityEngine.Random.Range(100, 200).ToString() + UnityEngine.Random.Range(100, 200).ToString();
+        //ScoreText.text = Score._instance.ScoreValue.ToString();
+        ScoreText.text = UnityEngine.Random.Range(100, 200).ToString() + UnityEngine.Random.Range(100, 200).ToString();
+
+    }
+
+    private void Update()
+    {
+        //ScoreText.text = Score._instance.ScoreValue.ToString();
     }
 
 
