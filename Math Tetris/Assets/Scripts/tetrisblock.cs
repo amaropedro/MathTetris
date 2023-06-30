@@ -134,11 +134,11 @@ public class tetrisblock : MonoBehaviour
                             
                             if(operador == 1 || operador == 2)
                             {
-                                Score._instance.ScoreValue += 70;
+                                Main_Game_Screen.ScoreValue += 70;
                             }
                             else
                             {
-                                Score._instance.ScoreValue += 100;
+                                Main_Game_Screen.ScoreValue += 100;
                             }
                             Destroy(obj);
                             if (ExpressionControler._instance.results.Count == 0)
@@ -155,22 +155,22 @@ public class tetrisblock : MonoBehaviour
                         {
                             if (operador == 1 || operador == 2)
                             {
-                                Score._instance.ScoreValue -= 35;
-                                if (Score._instance.ScoreValue < 0)
+                                Main_Game_Screen.ScoreValue -= 35;
+                                if (Main_Game_Screen.ScoreValue < 0)
                                 {
-                                    Score._instance.ScoreValue = 0;
+                                    Main_Game_Screen.ScoreValue = 0;
                                 }
                             }
                             else
                             {
-                                Score._instance.ScoreValue -= 50;
-                                if(Score._instance.ScoreValue < 0)
+                                Main_Game_Screen.ScoreValue -= 50;
+                                if (Main_Game_Screen.ScoreValue < 0)
                                 {
-                                    Score._instance.ScoreValue = 0;
+                                    Main_Game_Screen.ScoreValue = 0;
                                 }
                             }
                             ExpressionControler._instance.addToList(resultado);
-                            StartCoroutine(SpawnAndDestroyCoroutine(20));                          
+                            StartCoroutine(SpawnAndDestroyCoroutine(50));                          
                         }
                     }
                 }
