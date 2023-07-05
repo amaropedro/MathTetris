@@ -9,7 +9,7 @@ public class Smalltetrisblock : MonoBehaviour
 {
     public TextMeshProUGUI text;
     public bool hasFallen = false;
-    public float fallspeed = 2.0f;
+    public float fallspeed = 1.0f;
     private float falltimer;
     public int result;
     private bool res_already_added = true;

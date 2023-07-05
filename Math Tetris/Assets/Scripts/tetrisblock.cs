@@ -119,7 +119,7 @@ public class tetrisblock : MonoBehaviour
                 else
                 {
                     isEnabled = false;
-                    if (transform.position.y >= 18.5f)
+                    if (transform.position.y >= 16.5f)
                     {
                         //game over
                         print("game over");
@@ -187,7 +187,7 @@ public class tetrisblock : MonoBehaviour
     IEnumerator SpawnAndDestroyCoroutine(int chance)
     {
         Spawner._instance.SpawnSmallPieces(chance);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1.5f);
         Spawner._instance.SpawnPiece();
         Destroy(gameObject);
     }
