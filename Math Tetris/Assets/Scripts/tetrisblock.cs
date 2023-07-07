@@ -28,9 +28,9 @@ public class tetrisblock : MonoBehaviour
         operador = UnityEngine.Random.Range(1, 5);
         resultado = ExpressionControler._instance.chooseRandomResult();
 
-        //Debug.Log("Remove atual para proxima nn ser chamada com o mesmo valor: " + resultado);
         ExpressionControler._instance.removeFromList(resultado);
-        
+        Debug.Log("Peça grande remove: " + resultado);
+
         //escolher se vai incluir as operações com 0 ou não
         switch (operador)
         {
@@ -78,7 +78,6 @@ public class tetrisblock : MonoBehaviour
             default:
                 break;
         }
-        //Debug.Log(resultado);
 
         text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
@@ -87,9 +86,9 @@ public class tetrisblock : MonoBehaviour
     {
         if (isEnabled)
         {
-            RaycastHit2D down_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), 1f);
-            RaycastHit2D right_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.right), 1f);
-            RaycastHit2D left_hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), 1f);
+            RaycastHit2D down_hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
+            RaycastHit2D right_hit = Physics2D.Raycast(transform.position, Vector2.right, 1f);
+            RaycastHit2D left_hit = Physics2D.Raycast(transform.position, Vector2.left, 1f);
 
             if (Input.GetKeyDown(KeyCode.LeftArrow) && !left_hit)
             {
@@ -121,10 +120,7 @@ public class tetrisblock : MonoBehaviour
                     isEnabled = false;
                     if (transform.position.y >= 16.5f)
                     {
-                        //game over
-                        print("game over");
                         SceneManager.LoadScene("GameOverScreen");
-
                     }
                     else
                     {
@@ -170,6 +166,7 @@ public class tetrisblock : MonoBehaviour
                                 }
                             }
                             ExpressionControler._instance.addToList(resultado);
+                            Debug.Log("Peça errou. add: " + resultado);
                             StartCoroutine(SpawnAndDestroyCoroutine(50));                          
                         }
                     }
