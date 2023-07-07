@@ -118,57 +118,51 @@ public class tetrisblock : MonoBehaviour
                 else
                 {
                     isEnabled = false;
-                    if (transform.position.y >= 16.5f)
+ 
+                    GameObject obj = down_hit.collider.gameObject;
+                    if (obj.CompareTag("SmallBlock") && (resultado == obj.GetComponent<Smalltetrisblock>().result))
                     {
-                        SceneManager.LoadScene("GameOverScreen");
+                        
+                        if(operador == 1 || operador == 2)
+                        {
+                            Main_Game_Screen.ScoreValue += 70;
+                        }
+                        else
+                        {
+                            Main_Game_Screen.ScoreValue += 100;
+                        }
+                        Destroy(obj);
+                        if (ExpressionControler._instance.results.Count == 0)
+                        {
+                            StartCoroutine(SpawnAndDestroyCoroutine(50));
+                        }
+                        else
+                        {
+                            Spawner._instance.SpawnPiece();
+                            Destroy(gameObject);
+                        }
                     }
                     else
                     {
-                        GameObject obj = down_hit.collider.gameObject;
-                        if (obj.CompareTag("SmallBlock") && (resultado == obj.GetComponent<Smalltetrisblock>().result))
+                        if (operador == 1 || operador == 2)
                         {
-                            
-                            if(operador == 1 || operador == 2)
+                            Main_Game_Screen.ScoreValue -= 35;
+                            if (Main_Game_Screen.ScoreValue < 0)
                             {
-                                Main_Game_Screen.ScoreValue += 70;
-                            }
-                            else
-                            {
-                                Main_Game_Screen.ScoreValue += 100;
-                            }
-                            Destroy(obj);
-                            if (ExpressionControler._instance.results.Count == 0)
-                            {
-                                StartCoroutine(SpawnAndDestroyCoroutine(50));
-                            }
-                            else
-                            {
-                                Spawner._instance.SpawnPiece();
-                                Destroy(gameObject);
+                                Main_Game_Screen.ScoreValue = 0;
                             }
                         }
                         else
                         {
-                            if (operador == 1 || operador == 2)
+                            Main_Game_Screen.ScoreValue -= 50;
+                            if (Main_Game_Screen.ScoreValue < 0)
                             {
-                                Main_Game_Screen.ScoreValue -= 35;
-                                if (Main_Game_Screen.ScoreValue < 0)
-                                {
-                                    Main_Game_Screen.ScoreValue = 0;
-                                }
+                                Main_Game_Screen.ScoreValue = 0;
                             }
-                            else
-                            {
-                                Main_Game_Screen.ScoreValue -= 50;
-                                if (Main_Game_Screen.ScoreValue < 0)
-                                {
-                                    Main_Game_Screen.ScoreValue = 0;
-                                }
-                            }
-                            ExpressionControler._instance.addToList(resultado);
-                            Debug.Log("Peça errou. add: " + resultado);
-                            StartCoroutine(SpawnAndDestroyCoroutine(50));                          
                         }
+                        ExpressionControler._instance.addToList(resultado);
+                        Debug.Log("Peça errou. add: " + resultado);
+                        StartCoroutine(SpawnAndDestroyCoroutine(50));                          
                     }
                 }
             }

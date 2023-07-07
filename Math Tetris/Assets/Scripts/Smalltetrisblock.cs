@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Smalltetrisblock : MonoBehaviour
 {
@@ -39,6 +40,10 @@ public class Smalltetrisblock : MonoBehaviour
 
         if (hasFallen)
         {
+            if (transform.position.y >= 16.5f)
+            {
+                SceneManager.LoadScene("GameOverScreen");
+            }
             Collider2D up_hit = Physics2D.OverlapPoint(transform.position + new Vector3(0, 0.6f, 0));
 
             if (up_hit)
