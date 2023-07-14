@@ -39,7 +39,10 @@ public class tetrisblock : MonoBehaviour
 
     void Update()
     {
-        if (isEnabled)
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            SceneManager.LoadScene("GameOverScreen");
+
+            if (isEnabled)
         {
             RaycastHit2D down_hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
             RaycastHit2D right_hit = Physics2D.Raycast(transform.position, Vector2.right, 1f);
