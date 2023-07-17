@@ -4,13 +4,30 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using TMPro.EditorUtilities;
 
 public class Game_Over_Screen : MonoBehaviour
-
 {
     //public TMP_Text score_value;
+    [SerializeField] RankHandler _rankHandler;
+    [SerializeField] GameObject panel;
+    [SerializeField] GameObject rankUIElementsPrefab;
+    [SerializeField] Transform elementWrapper;
+
+    List<GameObject> uiElements = new List<GameObject>();
+
+    private void OnEnable()//Não entendi bem pra que serve isso
+    {
+        RankHandler.onRankListChanged += UpdateUI;
+    }
+    private void OnDisable()
+    {
+        RankHandler.onRankListChanged -= UpdateUI;
+    }
+
+
     public TMP_Text ScoreText;
+    [SerializeField] TMP_InputField nameInput;
     public void QuitToMenu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -26,7 +43,59 @@ public class Game_Over_Screen : MonoBehaviour
         ScoreText.text = Main_Game_Screen.ScoreValue.ToString();
 
     }
+
+    public void ShowPanel()
+    {
+        panel.SetActive(true);
+    }
+    public void HidePanel()
+    {
+        panel.SetActive(false);
+    }
+
+    public void AddScore()
+    {
+        _rankHandler.AddRankIfPossible(new RankElement(nameInput.text.ToUpper(), Main_Game_Screen.ScoreValue));
+        nameInput.text = ""; //Ver se necessario
+    }
+
+    private void UpdateUI(List<RankElement> list)
+    {
+        for(int i =0; i < list.Count; i++)
+        {
+            RankElement rankAux = list[i];
+            if (rankAux.score>=0)//mudar para >0
+            {
+                if (i >= uiElements.Count)
+                {
+                    //Intanciate new object entry
+                    var inst = Instantiate(rankUIElementsPrefab, Vector3.zero, Quaternion.identity);
+                    inst.transform.SetParent(elementWrapper, false);
+
+                    uiElements.Add(inst);
+                }
+
+
+                //Write or overwrite name and score
+                var texts = uiElements[i].GetComponentsInChildren<TMP_Text>();//ver essa linha caso não funcionar 
+                texts[0].text = rankAux.playerName;
+                texts[1].text = rankAux.score.ToString();
+            }
+        }
+    }
+    /*
+     public void AddNameToList()
+    {
+        //entries.Add(new InputEntry(nameInput.text, Random.Range(0, 100)));
+        entries.Add(new InputEntry(nameInput.text.ToUpper(), Random.Range(0, 100)));
+        nameInput.text = "";
+
+        FileHandler.SaveToJSON<InputEntry>(entries,filename);
+    }
+     */
+
+
 }
-    
-   
-    
+
+
+
