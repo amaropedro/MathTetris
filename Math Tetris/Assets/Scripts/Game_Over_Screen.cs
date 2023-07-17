@@ -56,7 +56,7 @@ public class Game_Over_Screen : MonoBehaviour
     public void AddScore()
     {
         _rankHandler.AddRankIfPossible(new RankElement(nameInput.text.ToUpper(), Main_Game_Screen.ScoreValue));
-        nameInput.text = ""; //Ver se necessario
+        nameInput.text = "";
     }
 
     private void UpdateUI(List<RankElement> list)
@@ -64,7 +64,7 @@ public class Game_Over_Screen : MonoBehaviour
         for(int i =0; i < list.Count; i++)
         {
             RankElement rankAux = list[i];
-            if (rankAux.score>=0)//mudar para >0
+            if (rankAux.score>0)
             {
                 if (i >= uiElements.Count)
                 {
@@ -77,24 +77,12 @@ public class Game_Over_Screen : MonoBehaviour
 
 
                 //Write or overwrite name and score
-                var texts = uiElements[i].GetComponentsInChildren<TMP_Text>();//ver essa linha caso não funcionar 
+                var texts = uiElements[i].GetComponentsInChildren<TMP_Text>();
                 texts[0].text = rankAux.playerName;
                 texts[1].text = rankAux.score.ToString();
             }
         }
     }
-    /*
-     public void AddNameToList()
-    {
-        //entries.Add(new InputEntry(nameInput.text, Random.Range(0, 100)));
-        entries.Add(new InputEntry(nameInput.text.ToUpper(), Random.Range(0, 100)));
-        nameInput.text = "";
-
-        FileHandler.SaveToJSON<InputEntry>(entries,filename);
-    }
-     */
-
-
 }
 
 

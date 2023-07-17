@@ -39,7 +39,7 @@ public class RankHandler : MonoBehaviour
     {
         for (int i = 0; i < maxCount; i++) 
         {
-            if( i >= rankElements.Count || element.score > rankElements[i].score)
+            if( i >= rankElements.Count || element.score > rankElements[i].score)//Ver se é necessario colocar um >=
             {
                 //add new rank informations
                 rankElements.Insert(i, element);
