@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour
 
         if (s == null)
         {
-            Debug.Log("Audio '" + name + "' não encontrado.");
+            Debug.Log("Audio '" + name + "' nao encontrado.");
             return;
         }
         if (!s.source.isPlaying)
@@ -56,13 +56,18 @@ public class AudioManager : MonoBehaviour
 
         if (s == null)
         {
-            Debug.Log("Audio '" + name + "' não encontrado.");
+            Debug.Log("Audio '" + name + "' nao encontrado.");
             yield return null;
         }
         if (!s.source.isPlaying)
             s.source.Play();
+        else
+        {
+            s.source.Stop();
+            s.source.Play();
+        }
        
-        yield return new WaitWhile(() => s.source.isPlaying); ;
+        yield return new WaitWhile(() => s.source.isPlaying);
     }
 
     public void Stop(string name)
@@ -71,7 +76,7 @@ public class AudioManager : MonoBehaviour
 
         if (s == null)
         {
-            Debug.Log("Audio '" + name + "' não encontrado.");
+            Debug.Log("Audio '" + name + "' nao encontrado.");
             return;
         }
         if (s.source.isPlaying)
