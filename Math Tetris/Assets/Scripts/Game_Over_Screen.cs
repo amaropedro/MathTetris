@@ -15,7 +15,7 @@ public class Game_Over_Screen : MonoBehaviour
 
     List<GameObject> uiElements = new List<GameObject>();
 
-    private void OnEnable()//Não entendi bem pra que serve isso
+    private void OnEnable()//Nï¿½o entendi bem pra que serve isso
     {
         RankHandler.onRankListChanged += UpdateUI;
     }
@@ -39,8 +39,9 @@ public class Game_Over_Screen : MonoBehaviour
 
     private void Start()
     {
+        FindObjectOfType<AudioManager>().Stop("BackgroundTrack");
+        FindObjectOfType<AudioManager>().Play("GameOver");
         ScoreText.text = Main_Game_Screen.ScoreValue.ToString();
-
     }
 
     public void ShowPanel()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -40,9 +41,11 @@ public class tetrisblock : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Escape))
+        {
             SceneManager.LoadScene("GameOverScreen");
+        }            
 
-            if (isEnabled)
+        if (isEnabled)
         {
             RaycastHit2D down_hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
             RaycastHit2D right_hit = Physics2D.Raycast(transform.position, Vector2.right, 1f);
@@ -80,6 +83,7 @@ public class tetrisblock : MonoBehaviour
                     GameObject obj = down_hit.collider.gameObject;
                     if (obj.CompareTag("SmallBlock") && (resultado == obj.GetComponent<Smalltetrisblock>().result))
                     {
+                        StartCoroutine(FindObjectOfType<AudioManager>().PlayAndWait("PieceHit"));
                         
                         if(operador == 1 || operador == 2)
                         {
@@ -102,6 +106,7 @@ public class tetrisblock : MonoBehaviour
                     }
                     else
                     {
+                        StartCoroutine(FindObjectOfType<AudioManager>().PlayAndWait("PieceError"));
                         if (operador == 1 || operador == 2)
                         {
                             Main_Game_Screen.ScoreValue -= 35;
