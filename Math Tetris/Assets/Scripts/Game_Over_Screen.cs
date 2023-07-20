@@ -4,12 +4,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 
 public class Game_Over_Screen : MonoBehaviour
 {
     //public TMP_Text score_value;
     [SerializeField] RankHandler _rankHandler;
     [SerializeField] GameObject panel;
+    [SerializeField] GameObject addToRank;
     [SerializeField] GameObject rankUIElementsPrefab;
     [SerializeField] Transform elementWrapper;
 
@@ -24,6 +26,11 @@ public class Game_Over_Screen : MonoBehaviour
         RankHandler.onRankListChanged -= UpdateUI;
     }
 
+
+    [SerializeField] GameObject congrats;
+    [SerializeField] TMP_Text rankPosition;
+    [SerializeField] GameObject tryAgain;
+    [SerializeField] GameObject rankPositionFormat;
 
     public TMP_Text ScoreText;
     [SerializeField] TMP_InputField nameInput;
@@ -55,32 +62,40 @@ public class Game_Over_Screen : MonoBehaviour
 
     public void AddScore()
     {
-        _rankHandler.AddRankIfPossible(new RankElement(nameInput.text.ToUpper(), Main_Game_Screen.ScoreValue));
+        int position = _rankHandler.AddRankIfPossible(new RankElement(nameInput.text.ToUpper(), Main_Game_Screen.ScoreValue));
         nameInput.text = "";
+        addToRank.SetActive(false);
+        rankPosition.text = "Você ficou em "+position.ToString()+"° no rank!";
+        rankPositionFormat.SetActive(true);
+        
+        if (position > 0 && position<4)
+        {
+            congrats.SetActive(true);
+        }else if(position > 5)
+        {
+            tryAgain.SetActive(true);
+        }
     }
 
     private void UpdateUI(List<RankElement> list)
     {
-        for(int i =0; i < list.Count; i++)
+        for(int i =0; i < 3; i++)//CONTROLA QUANTOS RANKS APARECEM
         {
             RankElement rankAux = list[i];
-            if (rankAux.score>0)
+            if (i >= uiElements.Count)
             {
-                if (i >= uiElements.Count)
-                {
-                    //Intanciate new object entry
-                    var inst = Instantiate(rankUIElementsPrefab, Vector3.zero, Quaternion.identity);
-                    inst.transform.SetParent(elementWrapper, false);
+                //Intanciate new object entry
+                var inst = Instantiate(rankUIElementsPrefab, Vector3.zero, Quaternion.identity);
+                inst.transform.SetParent(elementWrapper, false);
 
-                    uiElements.Add(inst);
-                }
-
-
-                //Write or overwrite name and score
-                var texts = uiElements[i].GetComponentsInChildren<TMP_Text>();
-                texts[0].text = rankAux.playerName;
-                texts[1].text = rankAux.score.ToString();
+                uiElements.Add(inst);
             }
+
+
+            //Write or overwrite name and score
+            var texts = uiElements[i].GetComponentsInChildren<TMP_Text>();
+            texts[0].text = rankAux.playerName;
+            texts[1].text = rankAux.score.ToString();
         }
     }
 }

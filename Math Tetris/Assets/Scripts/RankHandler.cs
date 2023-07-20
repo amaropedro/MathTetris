@@ -7,7 +7,6 @@ public class RankHandler : MonoBehaviour
 {
     // Start is called before the first frame update
     List<RankElement> rankElements = new List<RankElement>();
-    [SerializeField] int maxCount = 8;
     [SerializeField] string filename; //Ver se não é melhor mudar para um nome padrão
 
     public delegate void OnRankListChanged(List <RankElement> list);//Não entendi bem pra que serve isso
@@ -21,10 +20,7 @@ public class RankHandler : MonoBehaviour
     {
         rankElements = FileHandler.ReadFromJSON<RankElement>(filename);
 
-        while (rankElements.Count > maxCount)//Necessario mudar isso posteriormente
-        {
-            rankElements.RemoveAt(maxCount);
-        }
+
         if(onRankListChanged != null)//Não entendi bem pra que serve isso
         {
             onRankListChanged.Invoke(rankElements);
@@ -35,29 +31,50 @@ public class RankHandler : MonoBehaviour
     {
         FileHandler.SaveToJSON<RankElement>(rankElements,filename);
     }
-    public void AddRankIfPossible(RankElement element) //Ver se aqui é possivel sobrescrever a pontuação de uma pessoa
+    public int AddRankIfPossible(RankElement element) 
     {
-        for (int i = 0; i < maxCount; i++) 
+ 
+        RemoveDuplicates(element);
+        for(int i = 0; i <= rankElements.Count; i++)
         {
-            if( i >= rankElements.Count || element.score > rankElements[i].score)//Ver se é necessario colocar um >=
+            if(element.score>=0 && !string.IsNullOrEmpty(element.playerName))
             {
-                //add new rank informations
-                rankElements.Insert(i, element);
-
-                while(rankElements.Count > maxCount)
+                if (rankElements.Count < i && element.playerName.Equals(rankElements[i].playerName))
                 {
-                    rankElements.RemoveAt(maxCount);
+                    Debug.Log("Você é o "+(i+1).ToString()+"° no ranking");
+                    return (i+1);
                 }
-
-                SaveRank();
-
-                if (onRankListChanged != null)//Não entendi bem pra que serve isso
+                
+                if ( i >= rankElements.Count || element.score > rankElements[i].score)//Ver se é necessario colocar um >=
                 {
-                    onRankListChanged.Invoke(rankElements);
-                }
+                    Debug.Log("Você é o " + (i + 1).ToString() + "° no ranking");
+                    //add new rank informations
+                    rankElements.Insert(i, element);
 
+                    SaveRank();
+
+                    if (onRankListChanged != null)//Não entendi bem pra que serve isso
+                    {
+                        onRankListChanged.Invoke(rankElements);
+                    }
+
+                    return (i+1);
+                }
+            }
+        }
+        return 0;
+    }
+
+    private void RemoveDuplicates(RankElement element)
+    {
+        for (int i = 0; i < rankElements.Count; i++)
+        {
+            if (element.playerName.Equals(rankElements[i].playerName) && element.score > rankElements[i].score)
+            {
+                rankElements.RemoveAt(i);
                 break;
             }
         }
     }
+
 }
