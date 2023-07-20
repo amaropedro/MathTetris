@@ -32,11 +32,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        Play("BackgroundTrack");
-    }
-
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, element => element.name.Equals(name));

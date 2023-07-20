@@ -10,6 +10,7 @@ public class Main_Game_Screen : MonoBehaviour
 
     void Start()
     {
+        FindObjectOfType<AudioManager>().Play("BackgroundTrack");
         ScoreValue = 0;
     }
 
