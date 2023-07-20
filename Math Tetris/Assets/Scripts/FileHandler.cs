@@ -53,6 +53,24 @@ public static class FileHandler
         return "";
     }
 
+    public static void DeleteFile(string filename)
+    {
+        string path = GetPath(filename);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
+
+    public static void ClearFile(string filename)
+    {
+        string path = GetPath(filename);
+        if (File.Exists(path))
+        {
+            File.WriteAllText(path, string.Empty);
+        }
+    }
+
 }
 
 public static class JsonHelper

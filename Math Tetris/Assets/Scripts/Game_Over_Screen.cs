@@ -77,6 +77,31 @@ public class Game_Over_Screen : MonoBehaviour
         }
     }
 
+    /*public void ClearUI()
+    {
+        for (int i = uiElements.Count - 1; i >= 0; i--)
+        {
+            if (uiElements[i] != null)
+            {
+                Destroy(uiElements[i]);
+            }
+
+            uiElements.RemoveAt(i);
+        }
+        _rankHandler.ClearRank();
+
+    }*/
+
+    public void ClearUI()
+    {
+        foreach (GameObject uiElement in uiElements)
+        {
+            Destroy(uiElement);
+        }
+        uiElements.Clear();
+        _rankHandler.ClearRank();
+    }
+
     private void UpdateUI(List<RankElement> list)
     {
         for(int i =0; i < 3; i++)//CONTROLA QUANTOS RANKS APARECEM

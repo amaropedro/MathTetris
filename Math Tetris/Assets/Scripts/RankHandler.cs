@@ -27,7 +27,13 @@ public class RankHandler : MonoBehaviour
         }
 
     }
-    private void SaveRank()
+
+    public void ClearRank()
+    {
+        FileHandler.ClearFile(filename);
+        rankElements.Clear();
+    }
+    public void SaveRank()
     {
         FileHandler.SaveToJSON<RankElement>(rankElements,filename);
     }
