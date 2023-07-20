@@ -81,6 +81,10 @@ public class Game_Over_Screen : MonoBehaviour
     {
         for(int i =0; i < 3; i++)//CONTROLA QUANTOS RANKS APARECEM
         {
+            if (i >= list.Count)
+            {
+                break;
+            }
             RankElement rankAux = list[i];
             if (i >= uiElements.Count)
             {

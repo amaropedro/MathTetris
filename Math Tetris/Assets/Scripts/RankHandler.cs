@@ -41,13 +41,11 @@ public class RankHandler : MonoBehaviour
             {
                 if (rankElements.Count < i && element.playerName.Equals(rankElements[i].playerName))
                 {
-                    Debug.Log("Você é o "+(i+1).ToString()+"° no ranking");
                     return (i+1);
                 }
                 
                 if ( i >= rankElements.Count || element.score > rankElements[i].score)//Ver se é necessario colocar um >=
                 {
-                    Debug.Log("Você é o " + (i + 1).ToString() + "° no ranking");
                     //add new rank informations
                     rankElements.Insert(i, element);
 
