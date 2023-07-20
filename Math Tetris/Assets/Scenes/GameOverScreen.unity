@@ -676,7 +676,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rankHandler: {fileID: 622666744}
-  panel: {fileID: 1108619245}
   addToRank: {fileID: 997293488}
   rankUIElementsPrefab: {fileID: 650541250535360941, guid: 4079f3730e2561e428cd990edd6cd24e, type: 3}
   elementWrapper: {fileID: 527769572}

@@ -10,9 +10,18 @@ public class MainMenu : MonoBehaviour
     
 	public void play_game(){
 	
-		SceneManager.LoadScene("TelaDoJogo"); 
+		SceneManager.LoadScene("TelaDoJogo");
 
-        }
+    }
+
+    public void startTutorial() {
+        Game_Over_Screen.ShowPanel();
+        //SceneManager.LoadScene("GameOverScreen.Game_Over_Screen.ShowPanel()");
+    }
+
+    public void AbrirTelaSobre() {
+        SceneManager.LoadScene("TelaSobre");
+    }
 
     public void Quit_Game()
     {
