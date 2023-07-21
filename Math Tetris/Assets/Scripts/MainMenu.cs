@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] GameObject sobrePanel;
+    [SerializeField] GameObject TutorialPanel;
 
     public void play_game(){
 	
@@ -14,8 +15,9 @@ public class MainMenu : MonoBehaviour
 
     }
 
-    public void startTutorial() {
-        
+    public void ToTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void OpenSobrePanel() {
