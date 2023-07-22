@@ -41,6 +41,12 @@ public class RankHandler : MonoBehaviour
     {
  
         RemoveDuplicates(element);
+
+        if(string.IsNullOrEmpty(element.playerName) && element.score>0) 
+        {
+            return -1;
+        }
+
         for(int i = 0; i <= rankElements.Count; i++)
         {
             if(element.score>=0 && !string.IsNullOrEmpty(element.playerName))

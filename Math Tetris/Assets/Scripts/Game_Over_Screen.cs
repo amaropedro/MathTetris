@@ -66,29 +66,39 @@ public class Game_Over_Screen : MonoBehaviour
     public void AddScore()
     {
         int position = _rankHandler.AddRankIfPossible(new RankElement(nameInput.text.ToUpper(), Main_Game_Screen.ScoreValue));
-        nameInput.text = "";
-        addToRank.SetActive(false);
 
-        if(position == 0)
+        if(position == -1)
         {
-            scoreZero.SetActive(true);
+            //do nothing. waiting for name to be filled
         }
         else
         {
-            rankPosition.text = "Você ficou em "+position.ToString()+"° no rank!";
-            rankPositionFormat.SetActive(true);
-        }
+            nameInput.text = "";
+            addToRank.SetActive(false);
 
-        
-        
-        if (position > 0 && position<4)
-        {
-            congrats.SetActive(true);
-        }else if(position > 5)
-        {
-            tryAgain.SetActive(true);
+            if (position == 0)
+            {
+                scoreZero.SetActive(true);
+            }
+            else
+            {
+                rankPosition.text = "Você ficou em " + position.ToString() + "° no rank!";
+                rankPositionFormat.SetActive(true);
+            }
+
+
+
+            if (position > 0 && position < 4)
+            {
+                congrats.SetActive(true);
+            }
+            else if (position > 5)
+            {
+                tryAgain.SetActive(true);
+            }
         }
     }
+    
     public void ClearUI()
     {
         foreach (GameObject uiElement in uiElements)
