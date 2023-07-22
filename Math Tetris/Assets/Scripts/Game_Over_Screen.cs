@@ -30,6 +30,7 @@ public class Game_Over_Screen : MonoBehaviour
     [SerializeField] TMP_Text rankPosition;
     [SerializeField] GameObject tryAgain;
     [SerializeField] GameObject rankPositionFormat;
+    [SerializeField] GameObject scoreZero;
 
     public TMP_Text ScoreText;
     [SerializeField] TMP_InputField nameInput;
@@ -64,8 +65,18 @@ public class Game_Over_Screen : MonoBehaviour
         int position = _rankHandler.AddRankIfPossible(new RankElement(nameInput.text.ToUpper(), Main_Game_Screen.ScoreValue));
         nameInput.text = "";
         addToRank.SetActive(false);
-        rankPosition.text = "Você ficou em "+position.ToString()+"° no rank!";
-        rankPositionFormat.SetActive(true);
+
+        if(position == 0)
+        {
+            scoreZero.SetActive(true);
+        }
+        else
+        {
+            rankPosition.text = "Você ficou em "+position.ToString()+"° no rank!";
+            rankPositionFormat.SetActive(true);
+        }
+
+        
         
         if (position > 0 && position<4)
         {
