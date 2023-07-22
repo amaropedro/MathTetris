@@ -24,10 +24,6 @@ public class tetrisblock : MonoBehaviour
     private bool isEnabled = true;
     public TextMeshProUGUI text;
 
-
-    //Main_Game_Screen mainGS = new Main_Game_Screen();
-    //Main_Game_Screen mainGS = gameObject.AddComponent<Main_Game_Screen>();
-    //Main_Game_Screen mainGS = GetComponent<Main_Game_Screen>();
     private void Start()
     {
         operador = UnityEngine.Random.Range(1, 5);
@@ -89,19 +85,6 @@ public class tetrisblock : MonoBehaviour
                     {
                         StartCoroutine(FindObjectOfType<AudioManager>().PlayAndWait("PieceHit"));
 
-                        /*if(operador == 1 || operador == 2)
-                        {
-                            Main_Game_Screen.ScoreValue += 70;
-                        }
-                        else
-                        {
-                            Main_Game_Screen.ScoreValue += 100;
-                        }*/
-                        Debug.Log("Operador F: " + operador.ToString());
-                        //setScore(operador, true);
-                        //Main_Game_Screen.SetScore(operador, true);
-                        //mainGS.SetScore(operador, true);
-                        //FindObjectOfType<AudioManager>().Play("BackgroundTrack");
                         FindObjectOfType<Main_Game_Screen>().SetScore(operador, true);
 
                         Destroy(obj);
@@ -118,27 +101,9 @@ public class tetrisblock : MonoBehaviour
                     else
                     {
                         StartCoroutine(FindObjectOfType<AudioManager>().PlayAndWait("PieceError"));
-                        Debug.Log("Operador: " + operador.ToString());
+                        
                         FindObjectOfType<Main_Game_Screen>().SetScore(operador, false);
-                        //Main_Game_Screen.SetScore(operador, false);
-                        //mainGS.SetScore(operador, true);
-                        //setScore(operador, false);
-                        /*if (operador == 1 || operador == 2)
-                        {
-                            Main_Game_Screen.ScoreValue -= 35;
-                            if (Main_Game_Screen.ScoreValue < 0)
-                            {
-                                Main_Game_Screen.ScoreValue = 0;
-                            }
-                        }
-                        else
-                        {
-                            Main_Game_Screen.ScoreValue -= 50;
-                            if (Main_Game_Screen.ScoreValue < 0)
-                            {
-                                Main_Game_Screen.ScoreValue = 0;
-                            }
-                        }*/
+                        
                         ExpressionControler._instance.addToList(resultado);
                         Debug.Log("Peça errou. add: " + resultado);
                         StartCoroutine(SpawnAndDestroyCoroutine(50));                          
@@ -249,63 +214,4 @@ public class tetrisblock : MonoBehaviour
                 break;
         }
     }
-
-    /*void setScore(int operador, bool acertou)
-    {
-        int ponto;
-        float multiplicador;
-        Debug.Log("Operador F: " + operador.ToString());
-        if(operador==1 || operador == 2)
-        {
-            ponto = 70;
-        }
-        else
-        {
-            ponto = 100;
-        }
-        switch (Main_Game_Screen.acertos)
-        {
-            case 0:
-                multiplicador = 1.0f;
-                break;
-            case 1:
-                multiplicador = 1.2f;
-                break;
-            default:
-                multiplicador = 2.0f;
-                break;
-        }
-
-        if(acertou)
-        {
-            Main_Game_Screen.ScoreValue += (int)(ponto * multiplicador);
-            Main_Game_Screen.acertos++;
-
-            Debug.Log("Pontos: +" + ((int)(ponto * multiplicador)).ToString());
-            Debug.Log("Acetos: "+ Main_Game_Screen.acertos.ToString());
-        }
-        else
-        {
-            Main_Game_Screen.ScoreValue -= ponto/2;
-            Main_Game_Screen.acertos = 0;
-            if(Main_Game_Screen.ScoreValue < 0)
-            {
-                Main_Game_Screen.ScoreValue = 0;
-            }
-
-            Debug.Log("Pontos: -" + (ponto/2).ToString());
-            Debug.Log("Acetos: " + Main_Game_Screen.acertos.ToString());
-        }
-
-
-        if (Main_Game_Screen.acertos > 0)
-        {
-
-        }
-
-
-
-
-    }*/
-
 }

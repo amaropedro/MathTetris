@@ -10,6 +10,7 @@ public class Game_Over_Screen : MonoBehaviour
     //public TMP_Text score_value;
     [SerializeField] RankHandler _rankHandler;
     [SerializeField] GameObject panel;
+    [SerializeField] GameObject canvasPanel;
     [SerializeField] GameObject addToRank;
     [SerializeField] GameObject rankUIElementsPrefab;
     [SerializeField] Transform elementWrapper;
@@ -54,9 +55,11 @@ public class Game_Over_Screen : MonoBehaviour
     public void ShowPanel()
     {
         panel.SetActive(true);
+        canvasPanel.SetActive(false);
     }
     public void HidePanel()
     {
+        canvasPanel.SetActive(true);
         panel.SetActive(false);
     }
 
