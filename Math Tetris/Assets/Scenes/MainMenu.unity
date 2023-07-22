@@ -2627,14 +2627,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "MathTetris foi um jogo produzido pelos alunos da UNIVASF em parceria com
-    o Col\xE9gio Rui Barbosa.\n\nEle visa trazer \xE1lgebra b\xE1sica de forma l\xFAdica
+    o Col\xE9gio Rui Barbosa.\nEle visa trazer \xE1lgebra b\xE1sica de forma l\xFAdica
     para os alunos do ensino fundamental.\n\nOrganiza\xE7\xE3o:\nJogo distribu\xEDdo
     gratuitamente pelos alunos de Engenharia De Software 3, ministrada pelo professor
-    Ricardo Argenton Ramos. \n\nPedro Henrique Amaro Ferreira Lacerda - Programador
-    L\xEDder e Scrum Master\nJuan Henryco Do Carmo Costa - Programador e Scrum Master\nMaic
-    De Oliveira Santos - Programador e PO\n\xCDtalo Alves Ten\xF3rio De Almeida -
-    Programador e Design\nElp\xEDdio Hans Dos Santos Le\xE3o Junior - Design Auxiliar\n\nAgradecimentos:
-    Neildson Sobreira de Lima Filho, Professor Jeimisson do col\xE9gio\_Rui\_Barbosa."
+    Ricardo Argenton Ramos.\n\nPedro Henrique Amaro Ferreira Lacerda - Programador
+    e Scrum Master\nJuan Henryco Do Carmo Costa - Programador e Scrum Master\n\xCDtalo
+    Alves Ten\xF3rio De Almeida - Programador Auxiliar e Design\nMaic De Oliveira
+    Santos - Programador Auxiliar e PO\nElp\xEDdio Hans Dos Santos Le\xE3o Junior
+    - Design Auxiliar\n\nAgradecimentos: Neildson Sobreira de Lima Filho, Professor
+    Jeimisson do col\xE9gio\_Rui\_Barbosa.\nReposit\xF3rio do projeto: github.com/amaropedro/MathTetris"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
