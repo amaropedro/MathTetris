@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,59 +32,19 @@ public class tetrisblock : MonoBehaviour
         ExpressionControler._instance.removeFromList(resultado);
         Debug.Log("Peça grande remove: " + resultado);
 
-        //escolher se vai incluir as operações com 0 ou não
-        switch (operador)
-        {
-            case 1:
-                operacao = '+';
-
-                operando1 = UnityEngine.Random.Range(0, resultado); 
-                operando2 = resultado-operando1;
-                break;
-            case 2:
-                operacao = '-';
-
-                operando1 = UnityEngine.Random.Range(resultado, 100); 
-                operando2 = operando1-resultado;
-                break;
-            case 3:
-                operacao = 'x';
-
-                List<(int,int)> values = new List<(int,int)> ();
-
-                for(int i = 0; ++i <= resultado;)
-                {
-                    if (resultado % i == 0)
-                    {
-                        operando1 = i;
-                        operando2 = resultado / i;
-                        values.Add((operando1, operando2));
-                    }
-                }
-                if (resultado == 0)
-                {
-                    values.Add((0, 0));
-                }
-                choice = UnityEngine.Random.Range(0, values.Count);
-
-                operando1 = values[choice].Item1; 
-                operando2 = values[choice].Item2;
-                break;
-            case 4:
-                operacao = '/';
-
-                operando2 = UnityEngine.Random.Range(1, 30);
-                operando1 = resultado * operando2;
-                break;
-            default:
-                break;
-        }
+        //eu n inclui nenhuma operação com 0 ou 1 nos operadores
+        generateEquasion(operador);
 
         text.text = operando1.ToString()+ "\n" + operacao +"\n" + operando2.ToString() ;
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("GameOverScreen");
+        }            
+
         if (isEnabled)
         {
             RaycastHit2D down_hit = Physics2D.Raycast(transform.position, Vector2.down, 1f);
@@ -122,15 +83,10 @@ public class tetrisblock : MonoBehaviour
                     GameObject obj = down_hit.collider.gameObject;
                     if (obj.CompareTag("SmallBlock") && (resultado == obj.GetComponent<Smalltetrisblock>().result))
                     {
-                        
-                        if(operador == 1 || operador == 2)
-                        {
-                            Main_Game_Screen.ScoreValue += 70;
-                        }
-                        else
-                        {
-                            Main_Game_Screen.ScoreValue += 100;
-                        }
+                        StartCoroutine(FindObjectOfType<AudioManager>().PlayAndWait("PieceHit"));
+
+                        FindObjectOfType<Main_Game_Screen>().SetScore(operador, true);
+
                         Destroy(obj);
                         if (ExpressionControler._instance.results.Count == 0)
                         {
@@ -144,22 +100,10 @@ public class tetrisblock : MonoBehaviour
                     }
                     else
                     {
-                        if (operador == 1 || operador == 2)
-                        {
-                            Main_Game_Screen.ScoreValue -= 35;
-                            if (Main_Game_Screen.ScoreValue < 0)
-                            {
-                                Main_Game_Screen.ScoreValue = 0;
-                            }
-                        }
-                        else
-                        {
-                            Main_Game_Screen.ScoreValue -= 50;
-                            if (Main_Game_Screen.ScoreValue < 0)
-                            {
-                                Main_Game_Screen.ScoreValue = 0;
-                            }
-                        }
+                        StartCoroutine(FindObjectOfType<AudioManager>().PlayAndWait("PieceError"));
+                        
+                        FindObjectOfType<Main_Game_Screen>().SetScore(operador, false);
+                        
                         ExpressionControler._instance.addToList(resultado);
                         Debug.Log("Peça errou. add: " + resultado);
                         StartCoroutine(SpawnAndDestroyCoroutine(50));                          
@@ -181,5 +125,93 @@ public class tetrisblock : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         Spawner._instance.SpawnPiece();
         Destroy(gameObject);
+    }
+
+    void generateEquasion(int op)
+    {
+        switch (op)
+        {
+            case 1:
+                operacao = '+';
+
+                operando1 = UnityEngine.Random.Range(1, resultado);
+                operando2 = resultado - operando1;
+                break;
+            case 2:
+                if(resultado <= 97)
+                {
+                    operacao = '-';
+
+                    operando1 = UnityEngine.Random.Range(resultado + 2, 100);
+                    operando2 = operando1 - resultado;
+                }
+                else
+                {
+                    generateEquasion(1);
+                }
+                
+                break;
+            case 3:
+                operacao = 'x';
+
+                List<(int, int)> values = new List<(int, int)>();
+
+                for (int i = 2; i < resultado; i++)
+                {
+                    if (resultado % i == 0)
+                    {
+                        operando1 = i;
+                        operando2 = resultado / i;
+                        values.Add((operando1, operando2));
+                    }
+                }
+
+                if (values.Count > 0)
+                {
+                    choice = UnityEngine.Random.Range(0, values.Count);
+
+                    operando1 = values[choice].Item1;
+                    operando2 = values[choice].Item2;
+                }
+                else
+                {
+                    operador = UnityEngine.Random.Range(1, 3);
+                    generateEquasion(operador);
+                }
+
+                break;
+            case 4:
+                operacao = '/';
+
+                List<(int, int)> valuesDivision = new List<(int, int)>();
+
+                for (int a = 30; a > 0; a--)
+                {
+                    for (int b = 2; b < a; b++)
+                    {
+                        if ((a % b) == 0 && (a / b) == resultado)
+                        {
+                            valuesDivision.Add((a, b));
+                            print(a + " / "+ b + " = " + resultado);
+                        }
+                    }
+                }
+
+                if (valuesDivision.Count > 0)
+                {
+                    choice = UnityEngine.Random.Range(0, valuesDivision.Count);
+
+                    operando1 = valuesDivision[choice].Item1;
+                    operando2 = valuesDivision[choice].Item2;
+                }
+                else
+                {
+                    generateEquasion(UnityEngine.Random.Range(1, 4));
+                }
+
+                break;
+            default:
+                break;
+        }
     }
 }

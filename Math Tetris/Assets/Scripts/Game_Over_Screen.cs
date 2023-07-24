@@ -5,12 +5,36 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-
 public class Game_Over_Screen : MonoBehaviour
-
 {
     //public TMP_Text score_value;
+    [SerializeField] RankHandler _rankHandler;
+    [SerializeField] GameObject panel;
+    [SerializeField] GameObject canvasPanel;
+    [SerializeField] GameObject addToRank;
+    [SerializeField] GameObject rankUIElementsPrefab;
+    [SerializeField] Transform elementWrapper;
+
+    List<GameObject> uiElements = new List<GameObject>();
+
+    private void OnEnable()//N�o entendi bem pra que serve isso
+    {
+        RankHandler.onRankListChanged += UpdateUI;
+    }
+    private void OnDisable()
+    {
+        RankHandler.onRankListChanged -= UpdateUI;
+    }
+
+
+    [SerializeField] GameObject congrats;
+    [SerializeField] TMP_Text rankPosition;
+    [SerializeField] GameObject tryAgain;
+    [SerializeField] GameObject rankPositionFormat;
+    [SerializeField] GameObject scoreZero;
+
     public TMP_Text ScoreText;
+    [SerializeField] TMP_InputField nameInput;
     public void QuitToMenu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -23,10 +47,94 @@ public class Game_Over_Screen : MonoBehaviour
 
     private void Start()
     {
+        FindObjectOfType<AudioManager>().Stop("BackgroundTrack");
+        FindObjectOfType<AudioManager>().Play("GameOver");
         ScoreText.text = Main_Game_Screen.ScoreValue.ToString();
+    }
 
+    public void ShowPanel()
+    {
+        panel.SetActive(true);
+        canvasPanel.SetActive(false);
+    }
+    public void HidePanel()
+    {
+        canvasPanel.SetActive(true);
+        panel.SetActive(false);
+    }
+
+    public void AddScore()
+    {
+        int position = _rankHandler.AddRankIfPossible(new RankElement(nameInput.text.ToUpper(), Main_Game_Screen.ScoreValue));
+
+        if(position == -1)
+        {
+            //do nothing. waiting for name to be filled
+        }
+        else
+        {
+            nameInput.text = "";
+            addToRank.SetActive(false);
+
+            if (position == 0)
+            {
+                scoreZero.SetActive(true);
+            }
+            else
+            {
+                rankPosition.text = "Você ficou em " + position.ToString() + "° no rank!";
+                rankPositionFormat.SetActive(true);
+            }
+
+
+
+            if (position > 0 && position < 4)
+            {
+                congrats.SetActive(true);
+            }
+            else if (position > 5)
+            {
+                tryAgain.SetActive(true);
+            }
+        }
+    }
+    
+    public void ClearUI()
+    {
+        foreach (GameObject uiElement in uiElements)
+        {
+            Destroy(uiElement);
+        }
+        uiElements.Clear();
+        _rankHandler.ClearRank();
+    }
+
+    private void UpdateUI(List<RankElement> list)
+    {
+        for(int i =0; i < 3; i++)//CONTROLA QUANTOS RANKS APARECEM
+        {
+            if (i >= list.Count)
+            {
+                break;
+            }
+            RankElement rankAux = list[i];
+            if (i >= uiElements.Count)
+            {
+                //Intanciate new object entry
+                var inst = Instantiate(rankUIElementsPrefab, Vector3.zero, Quaternion.identity);
+                inst.transform.SetParent(elementWrapper, false);
+
+                uiElements.Add(inst);
+            }
+
+
+            //Write or overwrite name and score
+            var texts = uiElements[i].GetComponentsInChildren<TMP_Text>();
+            texts[0].text = rankAux.playerName;
+            texts[1].text = rankAux.score.ToString();
+        }
     }
 }
-    
-   
-    
+
+
+
