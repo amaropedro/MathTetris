@@ -13,3 +13,9 @@ Maic De Oliveira Santos - Programador Auxiliar e PO
 Elpídio Hans Dos Santos Leão Junior - Design Auxiliar
 
 Agradecimentos: Neildson Sobreira de Lima Filho, Professor Jeimisson do colégio Rui Barbosa.
+
+# Como instalar
+![alt text](https://raw.githubusercontent.com/amaropedro/MathTetris/development/DownloadGuide/DownloadGuide.png)
+Clique na opção verde 'Code' e então em Download ZIP.
+Extraia o zip na pasta desejada do seu computador e clique duas vezes em 'Math tetris.exe' para abrir o instalador.
+Pronto! Agora é só seguir as instruções do instalador.
