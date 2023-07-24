@@ -49,7 +49,7 @@ public class RankHandler : MonoBehaviour
 
         for(int i = 0; i <= rankElements.Count; i++)
         {
-            if(element.score>=0 && !string.IsNullOrEmpty(element.playerName))
+            if(element.score>0 && !string.IsNullOrEmpty(element.playerName))
             {
                 if (rankElements.Count < i && element.playerName.Equals(rankElements[i].playerName))
                 {
