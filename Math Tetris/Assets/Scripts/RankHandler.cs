@@ -39,8 +39,12 @@ public class RankHandler : MonoBehaviour
     }
     public int AddRankIfPossible(RankElement element) 
     {
- 
-        RemoveDuplicates(element);
+        int aux = RemoveDuplicates(element);
+
+        if(aux != 0)
+        {
+            return aux;
+        }
 
         if(string.IsNullOrEmpty(element.playerName) && element.score>0) 
         {
@@ -53,6 +57,7 @@ public class RankHandler : MonoBehaviour
             {
                 if (rankElements.Count < i && element.playerName.Equals(rankElements[i].playerName))
                 {
+                    Debug.Log("Entrou aqui????");
                     return (i+1);
                 }
                 
@@ -75,7 +80,7 @@ public class RankHandler : MonoBehaviour
         return 0;
     }
 
-    private void RemoveDuplicates(RankElement element)
+    /*private void RemoveDuplicates(RankElement element)
     {
         for (int i = 0; i < rankElements.Count; i++)
         {
@@ -85,6 +90,27 @@ public class RankHandler : MonoBehaviour
                 break;
             }
         }
+    }*/
+
+    private int RemoveDuplicates(RankElement element)
+    {
+        for (int i = 0; i < rankElements.Count; i++)
+        {
+            if (element.playerName.Equals(rankElements[i].playerName))
+            {
+                if (element.score > rankElements[i].score)
+                {
+                    rankElements.RemoveAt(i);
+                    return 0;
+                }
+                else
+                {
+                    return (i + 1);
+                    //não remove o placar anterior se o novo ficar menor
+                }
+            }
+        }
+        return 0;
     }
 
-}
+    }
